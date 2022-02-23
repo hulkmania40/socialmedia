@@ -1,0 +1,12 @@
+img{
+  width: 25px;
+  height: 25px;
+}
+
+.footer-main{
+  cursor: context-menu;
+}
+
+.attribute{
+    display:none
+  }

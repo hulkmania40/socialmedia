@@ -1,0 +1,34 @@
+.login-wrap {
+    overflow: hidden;
+    position: relative;
+    padding: 20%;
+  }
+
+.login-bg {
+    opacity: 0.2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+}
+
+.login-content {
+    position: relative;
+    height: 100%;
+}
+
+.login-content > input{
+    margin: 10px 5px;
+    border-radius: 7px;
+    border: none;
+}
+
+.login-content > button{
+    margin-top: 5px;
+}
+
+.login-content > button > img{
+    width: 30px;
+    height: 30px;
+}
