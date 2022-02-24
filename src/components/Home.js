@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import Axios from 'axios';
+import axios from 'axios'
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-import { auth, db, logout } from "./firebase";
+import { auth, db } from "./firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import Pagination from '@material-ui/lab/Pagination';
 
 import '../css/Home.css'
 import Card from './Card'
+import Loader from './Loader'
 
 export default function Home() {
   const [call, setCall] = useState([])
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
+  const [isLoading, setLoading] = useState(true)
 
   const fetchUserName = async () => {
     try {
@@ -27,19 +27,23 @@ export default function Home() {
     }
   };
   
-  useEffect(() => {
-    if (loading) return;
-    fetchUserName();
-    getJoke();
-  }, [user, loading]);
 
-  const getJoke = () => {
-    Axios.get(`https://jsonplaceholder.typicode.com/todos/`).then((response)=>{
-      setCall(response.data)
-    })
-  }
-  
-  return (
+  useEffect (() => {
+    fetchUserName();
+    const getItems =  async () =>{
+      const result = await axios (
+        `https://jsonplaceholder.typicode.com/todos/` //Endpoint and parameter or base Url
+        )
+      console.log(result.data)
+
+      setCall(result.data)//sets the data to appear 
+      setLoading(false) //stop loading when data is fetched
+    }
+    getItems()
+
+  }, [])
+
+  return (isLoading? (<Loader />):(
     <div className='container'>
      Hello {name}
      
@@ -53,10 +57,10 @@ export default function Home() {
         </thead>
         <tbody>
       {
-          call.map(item => <Card data={item} key={item.id}/>)
+          call.map(item => <Card isLoading ={isLoading} data={item} key={item.id}/>)
       }
         </tbody>
       </table>
     </div>
-  );
+  ));
 }
