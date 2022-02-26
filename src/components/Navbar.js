@@ -5,6 +5,7 @@ import Home from './Home';
 import logo from '../images/logo.png'
 import '../css/Navbar.css'
 import Dashboard from './Dashboard';
+import Contact from './Contact';
 
 export default function Navbar() {
   return (
@@ -26,12 +27,16 @@ export default function Navbar() {
                 <li className="nav-item">
                     <Link className="nav-link" to='/login'>Login</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to='/contact'>Contact</Link>
+                </li>
                 </ul>
             </div>
         </nav>
         <Routes>
             <Route path="/login" exact element={<Login />} />
             <Route path="/dashboard" exact element={<Dashboard />} />
+            <Route path="/contact" exact element={<Contact />} />
             <Route path="/" exact element={<Home />} />
         </Routes>
     </Router>

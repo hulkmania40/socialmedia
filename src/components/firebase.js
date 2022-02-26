@@ -17,6 +17,8 @@ import {
   addDoc,
 } from "firebase/firestore";
 
+import { getDatabase } from "firebase/database";
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAHLrbHh3F2vuPvm_6nE1Dnne2O_eP4WqU",
@@ -30,7 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
+const fireDb = getDatabase(app);
 const googleProvider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
@@ -95,6 +97,7 @@ const logout = () => {
 export {
   auth,
   db,
+  fireDb,
   signInWithGoogle,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
