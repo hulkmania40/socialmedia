@@ -9,7 +9,7 @@ import { ref, set, get, child, getDatabase } from "firebase/database";
 export default function Contact() {
 
     const [contactObjects, setContactObjects] = useState({})
-
+    const [currentId, setCurrentId] = useState('')
 
     const dbRef = ref(getDatabase());
 
@@ -17,7 +17,6 @@ export default function Contact() {
         get(child(dbRef, 'contacts/')).then((snapshot) => {
             if (snapshot.exists()) {
                 const data=snapshot.val()
-                console.log(data);
                 setContactObjects({
                     ...data
                 })
@@ -44,7 +43,7 @@ export default function Contact() {
         </div>
         <div className='row'>
             <div className='col-md-5'>
-                <ContactForm addOrEdit={addOrEdit} />
+                <ContactForm {...({ addOrEdit, currentId, contactObjects })} />
             </div>
             <div className='col-md-7'>
                 <table className='table table-borderless table-stripped'>
@@ -59,14 +58,21 @@ export default function Contact() {
                     <tbody>
                         {
                             Object.keys(contactObjects).map(id=>{
-                                return 
-                                <tr>
+                                return (
+                                <tr key={id}>
                                     <td>{contactObjects[id].fullName}</td>
                                     <td>{contactObjects[id].mobile}</td>
                                     <td>{contactObjects[id].email}</td>
-                                    <td></td>
+                                    <td>
+                                        <a className='btn text-primary' onClick={()=> {setCurrentId(id)}}>
+                                            <i className='fas fa-pencil-alt'></i>
+                                        </a>
+                                        <a className='btn text-danger'>
+                                            <i className='fas fa-trash-alt'></i>
+                                        </a>
+                                    </td>
                                 </tr>
-                            })
+                            )})
                         }
                     </tbody>
                 </table>
